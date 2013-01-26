@@ -82,29 +82,8 @@ function exchangePieces() {
 
 function match() {
     matches = [];
-    
-    for(line = 0; line < board.length; line++) {
-        var hitCount = 0;
-        var firstMatch;
-        var pointer = board[line][0];
-        for(i = 1; i < board[line].length; i++) {
-            if(pointer == board[line][i]) {
-                hitCount++;
-                if (hitCount == 1) {
-                    firstMatch = [line, i-1];
-                }
-                if (i==(board[line].length-1) && hitCount > 1) {
-                    matches.push([firstMatch, [line, i]]);
-                    hitCount = 0;
-                }
-            } else {
-                if (hitCount > 1) {
-                    matches.push([firstMatch, [line, i-1]]);
-                }
-                hitCount = 0;
-            }
-            pointer = board[line][i];
-        }
+    for(var line = 0; line < board.length; line++) {
+        matchLine(line);
     }
     console.log(matches);
 }
@@ -120,12 +99,12 @@ function matchLine(line) {
                 firstMatch = [line, i-1];
             }
             if (i==(board[line].length-1) && hitCount > 1) {
-                matches.push(firstMatch, [line, i]);
+                matches.push([firstMatch, [line, i]]);
                 hitCount = 0;
             }
         } else {
             if (hitCount > 1) {
-                matches.push(firstMatch, [line, i-1]);
+                matches.push([firstMatch, [line, i-1]]);
             }
             hitCount = 0;
         }
