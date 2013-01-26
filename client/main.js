@@ -60,7 +60,6 @@ function bindClick() {
             selectedCoord = selectedPiece.split('x');
             clickedCoord = $(this).attr('id').split('x');
             if(isNear()) {
-                console.log('is near');
                 exchangePieces();
                 drawBoard();
                 selectedPiece = undefined;
@@ -79,4 +78,57 @@ function exchangePieces() {
     temp = board[selectedCoord[0]][selectedCoord[1]];
     board[selectedCoord[0]][selectedCoord[1]] = board[clickedCoord[0]][clickedCoord[1]];
     board[clickedCoord[0]][clickedCoord[1]] = temp;
+}
+
+function match() {
+    matches = [];
+    
+    for(line = 0; line < board.length; line++) {
+        var hitCount = 0;
+        var firstMatch;
+        var pointer = board[line][0];
+        for(i = 1; i < board[line].length; i++) {
+            if(pointer == board[line][i]) {
+                hitCount++;
+                if (hitCount == 1) {
+                    firstMatch = [line, i-1];
+                }
+                if (i==(board[line].length-1) && hitCount > 1) {
+                    matches.push([firstMatch, [line, i]]);
+                    hitCount = 0;
+                }
+            } else {
+                if (hitCount > 1) {
+                    matches.push([firstMatch, [line, i-1]]);
+                }
+                hitCount = 0;
+            }
+            pointer = board[line][i];
+        }
+    }
+    console.log(matches);
+}
+
+function matchLine(line) {
+    var hitCount = 0;
+    var firstMatch;
+    var pointer = board[line][0];
+    for(i = 1; i < board[line].length; i++) {
+        if(pointer == board[line][i]) {
+            hitCount++;
+            if (hitCount == 1) {
+                firstMatch = [line, i-1];
+            }
+            if (i==(board[line].length-1) && hitCount > 1) {
+                matches.push(firstMatch, [line, i]);
+                hitCount = 0;
+            }
+        } else {
+            if (hitCount > 1) {
+                matches.push(firstMatch, [line, i-1]);
+            }
+            hitCount = 0;
+        }
+        pointer = board[line][i];
+    }
 }
