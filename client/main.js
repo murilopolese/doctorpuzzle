@@ -1,6 +1,5 @@
 var board = new Array();
-var elements = [
-{
+var elements = [{
     element_id: 'red'
 }, 
 {
@@ -8,8 +7,7 @@ var elements = [
 }, 
 {
     element_id: 'blue'
-} 
-];
+}];
 var selectedPiece;
 
 Meteor.startup(function() {
@@ -85,6 +83,9 @@ function match() {
     for(var line = 0; line < board.length; line++) {
         matchLine(line);
     }
+    for(var col = 0; col < board[0].length; col++) {
+        matchCol(col);
+    }
     console.log(matches);
 }
 
@@ -109,5 +110,29 @@ function matchLine(line) {
             hitCount = 0;
         }
         pointer = board[line][i];
+    }
+}
+
+function matchCol(col) {
+    var hitCount = 0;
+    var firstMatch;
+    var pointer = board[0][col];
+    for(i = 1; i < board[col].length; i++) {
+        if(pointer == board[i][col]) {
+            hitCount++;
+            if (hitCount == 1) {
+                firstMatch = [i-1, col];
+            }
+            if (i==(board[col].length-1) && hitCount > 1) {
+                matches.push([firstMatch, [i-1, col]]);
+                hitCount = 0;
+            }
+        } else {
+            if (hitCount > 1) {
+                matches.push([firstMatch, [i-1, col]]);
+            }
+            hitCount = 0;
+        }
+        pointer = board[i][col];
     }
 }
