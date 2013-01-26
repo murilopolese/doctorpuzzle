@@ -124,7 +124,7 @@ function matchCol(col) {
                 firstMatch = [i-1, col];
             }
             if (i==(board[col].length-1) && hitCount > 1) {
-                matches.push([firstMatch, [i-1, col]]);
+                matches.push([firstMatch, [i, col]]);
                 hitCount = 0;
             }
         } else {
@@ -135,4 +135,8 @@ function matchCol(col) {
         }
         pointer = board[i][col];
     }
+}
+
+function replacePieces(matches) {
+    
 }
