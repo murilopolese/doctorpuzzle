@@ -1,0 +1,21 @@
+#board {
+    width: 50%;
+}
+
+#board .piece {
+    width: 20%;
+    margin: 0 5% 5px 0;
+    height: 50px;
+    background: #000;
+    float: left;
+}
+
+#board .piece.red {
+    background: #F00;
+}
+#board .piece.blue {
+    background: #00F;
+}
+#board .piece.green {
+    background: #0F0;
+}
