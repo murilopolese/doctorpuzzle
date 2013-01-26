@@ -14,6 +14,7 @@ Meteor.startup(function() {
     console.log('iniciou appplicação');
     populateBoard(4, 4);
     drawBoard();
+    bindClick();
 });
 
 function populateBoard(width, height) {
@@ -23,6 +24,7 @@ function populateBoard(width, height) {
             board[i][j] = randomize();
         }
     }
+    match();
 }
 
 function drawBoard() {
@@ -32,7 +34,7 @@ function drawBoard() {
             $('#board').append('<div id="' + i + 'x' + j + '" class="piece ' + board[i][j] + '"></div>');
         }
     }
-    bindClick();
+//    bindClick();
 }
 
 function isNear() {
@@ -58,7 +60,7 @@ function bindClick() {
             clickedCoord = $(this).attr('id').split('x');
             if(isNear()) {
                 exchangePieces();
-                drawBoard();
+                match();
                 selectedPiece = undefined;
             } else {
                 $('.selected').removeClass('selected');
@@ -75,19 +77,32 @@ function exchangePieces() {
     temp = board[selectedCoord[0]][selectedCoord[1]];
     board[selectedCoord[0]][selectedCoord[1]] = board[clickedCoord[0]][clickedCoord[1]];
     board[clickedCoord[0]][clickedCoord[1]] = temp;
+    drawBoard();
 }
 
 function match() {
+    $('.piece').unbind();
     matches = [];
+    getMatches();
+    if(matches.length > 0) {
+        setTimeout(function() {
+            replacePieces(matches);
+            match();
+        }, 2000);
+    } else {
+        bindClick();
+    }
+}
+
+function getMatches() {
     for(var line = 0; line < board.length; line++) {
         matchLine(line);
     }
     for(var col = 0; col < board[0].length; col++) {
         matchCol(col);
     }
-    replacePieces(matches);
-    drawBoard();
 }
+
 
 function matchLine(line) {
     var hitCount = 0;
@@ -171,15 +186,16 @@ function replacePieces(m) {
     console.log(m);
     for(var i = 0; i < m.length; i++) {
         if(m[i].firstMatch.x == m[i].lastMatch.x) { // COLUNA
-//            for(var j = m[i].firstMatch.y; j <= m[i].lastMatch.y; j++) {
-//                board[j][m[i].firstMatch.x] = randomize();
-//            }
+            for(var j = m[i].firstMatch.y; j <= m[i].lastMatch.y; j++) {
+                board[j][m[i].firstMatch.x] = randomize();
+            }
         } else { // LINHA
             for(var j = m[i].firstMatch.x; j <= m[i].lastMatch.x; j++) {
                 board[m[i].firstMatch.y][j] = randomize();
             }
         }
     }
+    drawBoard();
 }
 
 function randomize() {
