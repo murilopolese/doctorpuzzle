@@ -17,14 +17,7 @@ Meteor.startup(function() {
     populateBoard(4, 4);
     drawBoard();
     
-    $('.piece').click(function() {
-        if(selectedPiece == undefined) {
-            selectedPiece = $(this).attr('id');
-            console.log(selectedPiece);
-        } else if(isNear($(this).attr('id'))) {
-            console.log('is near')
-        }
-    });
+    
 });
 
 function populateBoard(width, height) {
@@ -44,6 +37,7 @@ function drawBoard() {
             $('#board').append('<div id="' + i + 'x' + j + '" class="piece ' + board[i][j] + '"></div>');
         }
     }
+    bindClick();
 }
 
 function isNear(id) {
@@ -51,13 +45,31 @@ function isNear(id) {
     var clickedCoord = id.split('x');
     
     if((clickedCoord[0] == selectedCoord[0]) &&
-    (Math.abs(clickedCoord[1] - selectedCoord[1]) == 1)) {
+        (Math.abs(clickedCoord[1] - selectedCoord[1]) == 1)) {
         return true;
     }
     if((clickedCoord[1] == selectedCoord[1]) &&
-    (Math.abs(clickedCoord[0] - selectedCoord[0]) == 1)) {
+        (Math.abs(clickedCoord[0] - selectedCoord[0]) == 1)) {
         return true;
     }
     
     return false;
+}
+
+function bindClick() {
+    $('.piece').click(function() {
+        if(selectedPiece == undefined) {
+            selectedPiece = $(this).attr('id');
+            $(this).addClass('selected');
+        } else {
+            if(isNear($(this).attr('id'))) {
+                console.log('is near')
+                drawBoard();
+                selectedPiece = undefined;
+            } else {
+                $('.selected').removeClass('selected');
+                selectedPiece = undefined;
+            }
+        }
+    });
 }

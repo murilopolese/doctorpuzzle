@@ -1,5 +1,5 @@
 #board {
-    width: 50%;
+    width: 55%;
 }
 
 #board .piece {
@@ -18,4 +18,10 @@
 }
 #board .piece.green {
     background: #0F0;
+}
+
+.selected {
+    opacity:0.25;
+    -moz-opacity: 0.25;
+    filter: alpha(opacity=25);
 }
