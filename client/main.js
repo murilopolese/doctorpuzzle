@@ -86,7 +86,7 @@ function match() {
     for(var col = 0; col < board[0].length; col++) {
         matchCol(col);
     }
-    console.log(matches);
+    replacePieces(matches);
 }
 
 function matchLine(line) {
@@ -97,15 +97,30 @@ function matchLine(line) {
         if(pointer == board[line][i]) {
             hitCount++;
             if (hitCount == 1) {
-                firstMatch = [line, i-1];
+                firstMatch = {
+                    'y': line, 
+                    'x': i-1
+                };
             }
             if (i==(board[line].length-1) && hitCount > 1) {
-                matches.push([firstMatch, [line, i]]);
+                matches.push({
+                    'firstMatch': firstMatch, 
+                    'lastMatch': {
+                        'y': line, 
+                        'x': i
+                    }
+                });
                 hitCount = 0;
             }
         } else {
             if (hitCount > 1) {
-                matches.push([firstMatch, [line, i-1]]);
+                matches.push({
+                    'firstMatch': firstMatch, 
+                    'lastMatch': {
+                        'y': line, 
+                        'x': i-1
+                    }
+                });
             }
             hitCount = 0;
         }
@@ -121,15 +136,30 @@ function matchCol(col) {
         if(pointer == board[i][col]) {
             hitCount++;
             if (hitCount == 1) {
-                firstMatch = [i-1, col];
+                firstMatch = {
+                    'y': i-1, 
+                    'x': col
+                };
             }
             if (i==(board[col].length-1) && hitCount > 1) {
-                matches.push([firstMatch, [i, col]]);
+                matches.push({
+                    'firstMatch': firstMatch, 
+                    'lastMatch': {
+                        'y': i, 
+                        'x': col
+                    }
+                });
                 hitCount = 0;
             }
         } else {
             if (hitCount > 1) {
-                matches.push([firstMatch, [i-1, col]]);
+                matches.push({
+                    'firstMatch': firstMatch, 
+                    'lastMatch': {
+                        'y': i-1, 
+                        'x':col
+                    }
+                });
             }
             hitCount = 0;
         }
@@ -137,6 +167,8 @@ function matchCol(col) {
     }
 }
 
-function replacePieces(matches) {
-    
+function replacePieces(m) {
+    for(var i = 0; i < m.length; i++) {
+        console.log(m[i]);
+    }
 }
