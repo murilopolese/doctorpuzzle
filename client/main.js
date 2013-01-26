@@ -20,8 +20,7 @@ function populateBoard(width, height) {
     for(i = 0; i < width; i++) {
         board[i] = [];
         for(j = 0; j < height; j++) {
-            board[i][j] = 
-            elements[parseInt(Math.random()*elements.length)].element_id
+            board[i][j] = randomize();
         }
     }
 }
@@ -87,6 +86,7 @@ function match() {
         matchCol(col);
     }
     replacePieces(matches);
+    drawBoard();
 }
 
 function matchLine(line) {
@@ -168,7 +168,20 @@ function matchCol(col) {
 }
 
 function replacePieces(m) {
+    console.log(m);
     for(var i = 0; i < m.length; i++) {
-        console.log(m[i]);
+        if(m[i].firstMatch.x == m[i].lastMatch.x) { // COLUNA
+//            for(var j = m[i].firstMatch.y; j <= m[i].lastMatch.y; j++) {
+//                board[j][m[i].firstMatch.x] = randomize();
+//            }
+        } else { // LINHA
+            for(var j = m[i].firstMatch.x; j <= m[i].lastMatch.x; j++) {
+                board[m[i].firstMatch.y][j] = randomize();
+            }
+        }
     }
+}
+
+function randomize() {
+    return elements[parseInt(Math.random()*elements.length)].element_id;
 }

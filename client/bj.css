@@ -6,7 +6,6 @@
     width: 20%;
     margin: 0 5% 5px 0;
     height: 50px;
-    background: #000;
     float: left;
 }
 
@@ -18,6 +17,9 @@
 }
 #board .piece.green {
     background: #0F0;
+}
+#board .piece.black {
+    background: #000;
 }
 
 .selected {
