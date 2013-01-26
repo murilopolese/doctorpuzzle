@@ -16,8 +16,6 @@ Meteor.startup(function() {
     console.log('iniciou appplicação');
     populateBoard(4, 4);
     drawBoard();
-    
-    
 });
 
 function populateBoard(width, height) {
@@ -40,10 +38,7 @@ function drawBoard() {
     bindClick();
 }
 
-function isNear(id) {
-    var selectedCoord = selectedPiece.split('x');
-    var clickedCoord = id.split('x');
-    
+function isNear() {
     if((clickedCoord[0] == selectedCoord[0]) &&
         (Math.abs(clickedCoord[1] - selectedCoord[1]) == 1)) {
         return true;
@@ -57,19 +52,23 @@ function isNear(id) {
 }
 
 function bindClick() {
-    $('.piece').click(function() {
+    $('.piece').click(function() { // PRIMEIRO CLIQUE
         if(selectedPiece == undefined) {
             selectedPiece = $(this).attr('id');
             $(this).addClass('selected');
-        } else {
-            if(isNear($(this).attr('id'))) {
-                console.log('is near')
+        } else { // SEGUNDO CLIQUE
+            selectedCoord = selectedPiece.split('x');
+            clickedCoord = $(this).attr('id').split('x');
+            if(isNear()) {
+                console.log('is near');
                 drawBoard();
                 selectedPiece = undefined;
             } else {
                 $('.selected').removeClass('selected');
                 selectedPiece = undefined;
             }
+            selectedCoord = null;
+            clickedCoord = null;
         }
     });
 }
