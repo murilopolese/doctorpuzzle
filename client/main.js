@@ -61,6 +61,7 @@ function bindClick() {
             clickedCoord = $(this).attr('id').split('x');
             if(isNear()) {
                 console.log('is near');
+                exchangePieces();
                 drawBoard();
                 selectedPiece = undefined;
             } else {
@@ -71,4 +72,11 @@ function bindClick() {
             clickedCoord = null;
         }
     });
+}
+
+function exchangePieces() {
+    var temp;
+    temp = board[selectedCoord[0]][selectedCoord[1]];
+    board[selectedCoord[0]][selectedCoord[1]] = board[clickedCoord[0]][clickedCoord[1]];
+    board[clickedCoord[0]][clickedCoord[1]] = temp;
 }
