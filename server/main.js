@@ -93,16 +93,13 @@ Meteor.methods({
         });
         return result;
     },
-    finishGame: function(gameId, userId) {
-        n = games.findOne({
-            ownerId: userId
-        },
+    finishGame: function(gameId) {
+        n = games.findOne(
         {
             gameId: gameId
         });
         
         games.update({
-            ownerId: userId, 
             gameId: gameId
         }, {
             $set: {
