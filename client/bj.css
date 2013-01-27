@@ -2,9 +2,18 @@
     width: 100%;
 }
 
+.vertical-screen {
+    width: 24%;
+    height: auto;
+}
+
+.horizontal-screen {
+    height: 24%;
+    width: auto;
+}
+
 #board .piece {
-    width: 20%;
-    margin: 0 5% 5px 0;
+    width: 24%;
     height: auto;
     float: left;
 }
