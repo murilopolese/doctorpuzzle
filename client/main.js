@@ -17,7 +17,7 @@ Meteor.startup(function() {
 Template.game.start = function() {
     myGame = games.findOne({gameId: parseInt(Session.get('gameId'))});
     if(myGame != undefined) {
-        if(myGame.status == 'ativo') {
+        if((myGame.status == 'ativo') && (myGame.score == 0)) {
             startGame();
         }
     } else {
@@ -35,7 +35,7 @@ function createRoom() {
 }
 
 function callStart() {
-    console.log('callStart()')
+    console.log('callStart()');
     Meteor.call('startGame', Session.get('gameId'), $.cookie('userId'), function() {
         console.log('fim da callStart()');
     })
@@ -213,8 +213,8 @@ function matchCol(col) {
 }
 
 function replacePieces(m) {
-    console.log(m);
     for(var i = 0; i < m.length; i++) {
+        Meteor.call('addScore', Session.get('gameId'), board[m[0].firstMatch.y][m[0].firstMatch.x], 1);
         if(m[i].firstMatch.x == m[i].lastMatch.x) { // COLUNA
             for(var j = m[i].firstMatch.y; j <= m[i].lastMatch.y; j++) {
                 board[j][m[i].firstMatch.x] = randomize();
@@ -226,8 +226,4 @@ function replacePieces(m) {
         }
     }
     drawBoard();
-}
-
-function randomize() {
-    return elements[parseInt(Math.random()*elements.length)].element_id;
 }

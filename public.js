@@ -15,3 +15,7 @@ var elements = [
 {
     element_id: 'pote'
 }];
+
+function randomize() {
+    return elements[parseInt(Math.random()*elements.length)].element_id;
+}
