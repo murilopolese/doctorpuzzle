@@ -1,15 +1,8 @@
 #board {
     width: 100%;
 }
-
-.vertical-screen {
-    width: 24%;
-    height: auto;
-}
-
-.horizontal-screen {
-    height: 24%;
-    width: auto;
+#scored {
+    display: none;
 }
 
 #board .piece {

@@ -56,7 +56,7 @@ Meteor.methods({
             gameId: parseInt(gameId)
         });
         if(element == myGame.notification.cureElement) {
-            console.log('marcou ponto');
+//            console.log('marcou ponto');
             games.update(
             {
                 gameId: parseInt(gameId)
@@ -68,7 +68,7 @@ Meteor.methods({
             })
             if(Math.random() > 0.2) {
                 e = randomize();
-                console.log('agora é '+e);
+//                console.log('agora é '+e);
                 games.update(
                 {
                     gameId: parseInt(gameId)

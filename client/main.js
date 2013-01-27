@@ -243,7 +243,9 @@ function replacePieces(m) {
             1,
             function(error, result) {
                 if(result) {
-                    console.log('marcou ponto');
+                    $('#scored').fadeIn('fast', function() {
+                        $(this).fadeOut('fast');
+                    })
                 }
             });
         if(m[i].firstMatch.x == m[i].lastMatch.x) { // COLUNA
