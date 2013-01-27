@@ -1,28 +1,51 @@
 var board = new Array();
-var elements = [
-{
-    element_id: 'esparadrapo'
-}, 
-{
-    element_id: 'bisturi'
-}, 
-{
-    element_id: 'injecao'
-}, 
-{
-    element_id: 'sangue'
-}, 
-{
-    element_id: 'pote'
-}];
 var selectedPiece;
 
 Meteor.startup(function() {
-    console.log('iniciou appplicação');
+    if($.cookie('userId') == null) {
+        $.cookie('userId', Math.random() * 100000);
+    }
+    if(document.URL.search('game/') != -1) {
+        game = document.URL.split('game/');
+        Session.set('gameId', game[1]);
+//        Meteor.call('joinGame', Session.get('gameId'), $.cookie('userId'));
+        Meteor.call('joinGame', Session.get('gameId'), 0);
+        $('#board').html('aguarde o jogo '+Session.get('gameId')+' começar');
+    }
+});
+
+Template.game.start = function() {
+    myGame = games.findOne({gameId: parseInt(Session.get('gameId'))});
+    if(myGame != undefined) {
+        if(myGame.status == 'ativo') {
+            startGame();
+        }
+    } else {
+        return '';
+    }
+}
+
+function createRoom() {
+    Meteor.call('createRoom', $.cookie('userId'), function(error, result) {
+        $('#board').html('<a class="start" href="javascript:callStart()">start game</a>')
+        Session.set('gameId', result);
+        $('#board').append('<br /> ' + Session.get('gameId'));
+        
+    });
+}
+
+function callStart() {
+    console.log('callStart()')
+    Meteor.call('startGame', Session.get('gameId'), $.cookie('userId'), function() {
+        console.log('fim da callStart()');
+    })
+}
+
+function startGame() {
     populateBoard(4, 4);
     drawBoard();
     bindClick();
-});
+}
 
 function populateBoard(width, height) {
     for(i = 0; i < width; i++) {

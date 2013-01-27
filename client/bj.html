@@ -5,6 +5,11 @@
 
 <body>
     <div id="board">
-
+        <a class="start" href="javascript:createRoom()">Create Room</a>
     </div>
+    {{>game}}
 </body>
+
+<template name="game">
+    {{start}}
+</template>
