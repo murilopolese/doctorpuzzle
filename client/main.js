@@ -66,14 +66,23 @@ function startGame() {
     var interval = setTimeout(function() {
         gameOver();
     }, 60*1000);
+    $('#heartContainer').html('<img class="heart" src="/imgs/heart1.gif" />');
+    var heart1 = setTimeout(function() {
+        $('#heartContainer').html('<img class="heart" src="/imgs/heart2.gif" />');
+    }, 20000)
+    var heart1 = setTimeout(function() {
+        $('#heartContainer').html('<img class="heart" src="/imgs/heart3.gif" />');
+    }, 40000)
 }
 
 function gameOver() {
     Meteor.call('getResult', Session.get('gameId'), function(error, result) {
         if(result.score >= result.target) {
             $('#board').html('<img class="finish" src="/imgs/win.jpg" />');
+            $('#heartContainer').html('<img class="heart" src="/imgs/heart1.gif" />');
         } else {
             $('#board').html('<img class="finish" src="/imgs/gameover.jpg" />');
+            $('#heartContainer').html('<img class="heart" src="/imgs/heart4.gif" />');
         }
         //        $('#board').append('<br />Seu time fez: '+result.score);
         //        $('#board').append('<br />Era pra fazer: '+result.target);
