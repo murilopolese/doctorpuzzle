@@ -236,7 +236,16 @@ function matchCol(col) {
 
 function replacePieces(m) {
     for(var i = 0; i < m.length; i++) {
-        Meteor.call('addScore', Session.get('gameId'), board[m[0].firstMatch.y][m[0].firstMatch.x], 1);
+        Meteor.call(
+            'addScore', 
+            Session.get('gameId'), 
+            board[m[0].firstMatch.y][m[0].firstMatch.x], 
+            1,
+            function(error, result) {
+                if(result) {
+                    console.log('marcou ponto');
+                }
+            });
         if(m[i].firstMatch.x == m[i].lastMatch.x) { // COLUNA
             for(var j = m[i].firstMatch.y; j <= m[i].lastMatch.y; j++) {
                 board[j][m[i].firstMatch.x] = randomize();

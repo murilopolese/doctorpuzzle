@@ -66,7 +66,7 @@ Meteor.methods({
                     score: 1
                 }
             })
-            if(Math.random() > 0.5) {
+            if(Math.random() > 0.2) {
                 e = randomize();
                 console.log('agora é '+e);
                 games.update(
@@ -83,7 +83,9 @@ Meteor.methods({
                 })
                 
             }
+            return true;
         }
+        return false;
     },
     getResult: function(gameId) {
         var result = games.findOne({
