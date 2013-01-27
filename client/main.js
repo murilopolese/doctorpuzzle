@@ -8,8 +8,7 @@ Meteor.startup(function() {
     if(document.URL.search('game/') != -1) {
         game = document.URL.split('game/');
         Session.set('gameId', game[1]);
-//        Meteor.call('joinGame', Session.get('gameId'), $.cookie('userId'));
-        Meteor.call('joinGame', Session.get('gameId'), 0);
+        Meteor.call('joinGame', Session.get('gameId'), $.cookie('userId'));
         $('#board').html('aguarde o jogo '+Session.get('gameId')+' começar');
     }
 });

@@ -4,7 +4,6 @@ Meteor.startup(function() {
 
 Meteor.methods({
     createRoom: function(userid) {
-        console.log('create Room');
         gameId = parseInt(Math.random() * 100000);
         games.insert({
             gameId: gameId,
@@ -14,22 +13,30 @@ Meteor.methods({
             }],
             status: 'waiting players',
             score: 0,
+            target: 10,
             cureElement: 'sangue'
         });
         return gameId;
     },
     startGame: function(gameId, userId) {
+        n = games.find({
+            ownerId: userId
+        },
+        {
+            gameId: gameId
+        }).fetch().length;
+        
         games.update({
             ownerId: userId, 
             gameId: gameId
         }, {
             $set: {
-                status: 'ativo'
+                status: 'ativo',
+                target: 10 * n
             }
         })
     },
     joinGame: function(gameId, userId) {
-        console.log(userId + ' joined game ' + gameId)
         games.update({
             gameId: parseInt(gameId)
         }, {
@@ -44,7 +51,6 @@ Meteor.methods({
         var myGame = games.findOne({
             gameId: parseInt(gameId)
         });
-        console.log(myGame.cureElement);
         if(element == myGame.cureElement) {
             console.log('marcou ponto');
             games.update(
