@@ -47,7 +47,7 @@ function createRoom() {
             height: 300,
             color: '#000',
             bgColor: '#FFF',
-            text: 'http://bjdoctor.meteor.com/game/'+Session.get('gameId')
+            text: 'http://doctorpuzzle.meteor.com/game/'+Session.get('gameId')
         });
         $('#qrcode').append('<p class="host"><a class="start" href="javascript:callStart()">START GAME</a></p>');
     });
