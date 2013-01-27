@@ -26,6 +26,15 @@ Template.game.start = function() {
     }
 }
 
+Template.game.notification = function() {
+    myGame = games.findOne({
+        gameId: parseInt(Session.get('gameId'))
+    });
+    if((myGame != undefined) && (myGame.notification.userId == parseInt($.cookie('userId')))) {
+        return (myGame.notification.cureElement)
+    }
+}
+
 function createRoom() {
     Meteor.call('createRoom', $.cookie('userId'), function(error, result) {
         $('#board').html('<a class="start" href="javascript:callStart()">start game</a>')
