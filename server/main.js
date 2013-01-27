@@ -15,7 +15,6 @@ Meteor.methods({
             status: 'waiting players',
             score: 0,
             target: 5,
-            cureElement: e,
             notification: {
                 userId: userId,
                 cureElement: e
@@ -30,8 +29,6 @@ Meteor.methods({
         {
             gameId: gameId
         });
-        console.log(n.players.length)
-        
         
         games.update({
             ownerId: userId, 
@@ -58,7 +55,7 @@ Meteor.methods({
         var myGame = games.findOne({
             gameId: parseInt(gameId)
         });
-        if(element == myGame.cureElement) {
+        if(element == myGame.notification.cureElement) {
             console.log('marcou ponto');
             games.update(
             {

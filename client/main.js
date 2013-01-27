@@ -3,7 +3,7 @@ var selectedPiece;
 
 Meteor.startup(function() {
     if($.cookie('userId') == null) {
-        $.cookie('userId', Math.random() * 100000);
+        $.cookie('userId', parseInt(Math.random() * 100000));
     }
     if(document.URL.search('game/') != -1) {
         game = document.URL.split('game/');
