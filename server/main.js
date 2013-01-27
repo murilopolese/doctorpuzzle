@@ -12,7 +12,7 @@ Meteor.methods({
             players: [{
                 userId: userId
             }],
-            status: 'waiting players',
+            status: 'aguardando jogadores',
             score: 0,
             target: 5,
             notification: {
@@ -56,7 +56,7 @@ Meteor.methods({
             gameId: parseInt(gameId)
         });
         if(element == myGame.notification.cureElement) {
-//            console.log('marcou ponto');
+            //            console.log('marcou ponto');
             games.update(
             {
                 gameId: parseInt(gameId)
@@ -68,7 +68,7 @@ Meteor.methods({
             })
             if(Math.random() > 0.2) {
                 e = randomize();
-//                console.log('agora é '+e);
+                //                console.log('agora é '+e);
                 games.update(
                 {
                     gameId: parseInt(gameId)
@@ -92,5 +92,22 @@ Meteor.methods({
             gameId: gameId
         });
         return result;
+    },
+    finishGame: function(gameId, userId) {
+        n = games.findOne({
+            ownerId: userId
+        },
+        {
+            gameId: gameId
+        });
+        
+        games.update({
+            ownerId: userId, 
+            gameId: gameId
+        }, {
+            $set: {
+                status: 'finalizado'
+            }
+        })
     }
 })

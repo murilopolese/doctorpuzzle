@@ -7,10 +7,13 @@ var elements = [
     element_id: 'bisturi'
 }, 
 {
-    element_id: 'injecao'
+    element_id: 'seringa'
 }, 
 {
     element_id: 'sangue'
+}, 
+{
+    element_id: 'desfibrila'
 }, 
 {
     element_id: 'pote'

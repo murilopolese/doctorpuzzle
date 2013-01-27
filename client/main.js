@@ -32,23 +32,31 @@ Template.game.notification = function() {
     });
     if((myGame != undefined) && (myGame.notification.userId == parseInt($.cookie('userId')))) {
         return (myGame.notification.cureElement)
+    } else {
+        return 'default';
     }
 }
 
 function createRoom() {
     Meteor.call('createRoom', $.cookie('userId'), function(error, result) {
-        $('#board').html('<a class="start" href="javascript:callStart()">start game</a>')
+        $('#board').html('')
         Session.set('gameId', result);
-        $('#board').append('<br /> ' + Session.get('gameId'));
-        
+        $('#board').append('<div id="qrcode"></div>');
+        $('#qrcode').qrcode({
+            width: 300,
+            height: 300,
+            color: '#000',
+            bgColor: '#FFF',
+            text: 'http://bjdoctor.meteor.com/game/'+Session.get('gameId')
+        });
+        $('#qrcode').append('<p class="host"><a class="start" href="javascript:callStart()">START GAME</a></p>');
     });
 }
 
 function callStart() {
-    console.log('callStart()');
     Meteor.call('startGame', Session.get('gameId'), $.cookie('userId'), function() {
-        console.log('fim da callStart()');
-    })
+        
+        })
 }
 
 function startGame() {
@@ -62,9 +70,14 @@ function startGame() {
 
 function gameOver() {
     Meteor.call('getResult', Session.get('gameId'), function(error, result) {
-        $('#board').html('game over');
-        $('#board').append('<br />seu time fez: '+result.score);
-        $('#board').append('<br />era pra fazer: '+result.target);
+        if(result.score >= result.target) {
+            $('#board').html('<img class="finish" src="/imgs/win.jpg" />');
+        } else {
+            $('#board').html('<img class="finish" src="/imgs/gameover.jpg" />');
+        }
+        //        $('#board').append('<br />Seu time fez: '+result.score);
+        //        $('#board').append('<br />Era pra fazer: '+result.target);
+        Meteor.call('finishGame', Session.get('gameId'), $.cookie('userId'));
         
     });
 }
@@ -243,8 +256,8 @@ function replacePieces(m) {
             1,
             function(error, result) {
                 if(result) {
-                    $('#scored').fadeIn('fast', function() {
-                        $(this).fadeOut('fast');
+                    $('#scored').fadeIn(500, function() {
+                        $(this).fadeOut(500);
                     })
                 }
             });

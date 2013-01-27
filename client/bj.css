@@ -1,10 +1,70 @@
-#board {
-    width: 100%;
+body {
+    margin: 0;
+    padding: 0;
+    color: #FFF;
+    overflow: hidden;
+    font-family: "Courier New", Courier, monospace;
+    font-weight: bolder;
+    font-size: 12px;
 }
-#scored {
-    display: none;
+a:link, a:visited, a:active, a:hover {
+    text-decoration: none;
+    color: greenyellow;
 }
 
+#cenario {
+    position: absolute;
+    z-index: 1;
+}
+#cenario img {
+    height: 100%;
+    width: auto;
+}
+#thing {
+    width: 25%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 9998;
+}
+#cureElement {
+    width: 15%;
+    position: absolute;
+    bottom: 1%;
+    right: 2%;
+    z-index: 9999;
+}
+#scored {
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+    display: none;
+    z-index: 9999;
+    font-size: 32px;
+}
+
+#board {
+    width: 100%;
+    position: absolute;
+    z-index: 10;
+}
+#board ul {
+    width: 80%;
+}
+#board .host {
+    text-align: center;
+    font-size: 32px;
+}
+
+#board #qrcode {
+    width: 300px;
+    margin: 0 auto;
+}
+
+#board img.finish {
+    width: 100%;
+    height: auto;
+}
 #board .piece {
     width: 24%;
     height: auto;

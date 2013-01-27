@@ -1,18 +1,47 @@
 <head>
-  <title>bj</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+    <title>BJ Doctor!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
 </head>
 
 <body>
-    <div id="board">
-        <a class="start" href="javascript:createRoom()">Create Room</a>
+    <div id="cenario">
+        <img src="/imgs/cenario0.jpg" />
     </div>
-    <div class="cureElement"></div>
-    <div id="scored">Marcou ponto</div>
+    <div id="board">
+        <h1>
+            How to Play Doctor Puzzle:
+        </h1>
+        <ul>
+            <li>
+                Invite your friends to complete the team of doctors to save lives
+            </li>
+            <li>
+                To score, match at least 3 pieces vertically or horizontally of the item needed for the cure
+            </li>
+            <li>
+                You have 1 minute to score enough points of the right items to save the patient
+            </li>
+            <li>
+                At a given time, only one item combination will give you points. 
+                This item will be shown to only one player, so communicate doctors!
+            </li>
+            <li>
+                Pay attention to the patient's heart beats. 
+                Only your skills combined can save his life!
+            </li>
+        </ul>
+        <p class="host">
+            <a class="start" href="javascript:createRoom()">
+                HOST GAME
+            </a>
+        </p>
+    </div>
+    <div id="scored">+1 point</div>
     {{>game}}
 </body>
 
 <template name="game">
     {{start}}
-    {{notification}}
+    <img id="cureElement" src="/imgs/{{notification}}.png" />
+    <img id="thing" src="/imgs/prancheta.png" />
 </template>
