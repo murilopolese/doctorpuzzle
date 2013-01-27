@@ -1,11 +1,11 @@
 #board {
-    width: 55%;
+    width: 100%;
 }
 
 #board .piece {
     width: 20%;
     margin: 0 5% 5px 0;
-    height: 50px;
+    height: auto;
     float: left;
 }
 

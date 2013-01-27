@@ -1,12 +1,19 @@
 var board = new Array();
-var elements = [{
-    element_id: 'red'
+var elements = [
+{
+    element_id: 'esparadrapo'
 }, 
 {
-    element_id: 'green'
+    element_id: 'bisturi'
 }, 
 {
-    element_id: 'blue'
+    element_id: 'injecao'
+}, 
+{
+    element_id: 'sangue'
+}, 
+{
+    element_id: 'pote'
 }];
 var selectedPiece;
 
@@ -31,7 +38,7 @@ function drawBoard() {
     $('#board').html('');
     for(i = 0; i < board.length; i++) {
         for(j = 0; j < board[i].length; j++) {
-            $('#board').append('<div id="' + i + 'x' + j + '" class="piece ' + board[i][j] + '"></div>');
+            $('#board').append('<img src="/imgs/'+board[i][j]+'.png" id="' + i + 'x' + j + '" class="piece ' + board[i][j] + '"></div>');
         }
     }
 //    bindClick();
@@ -88,7 +95,7 @@ function match() {
         setTimeout(function() {
             replacePieces(matches);
             match();
-        }, 2000);
+        }, 500);
     } else {
         bindClick();
     }
