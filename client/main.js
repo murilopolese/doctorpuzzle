@@ -14,7 +14,9 @@ Meteor.startup(function() {
 });
 
 Template.game.start = function() {
-    myGame = games.findOne({gameId: parseInt(Session.get('gameId'))});
+    myGame = games.findOne({
+        gameId: parseInt(Session.get('gameId'))
+    });
     if(myGame != undefined) {
         if((myGame.status == 'ativo') && (myGame.score == 0)) {
             startGame();
@@ -44,6 +46,18 @@ function startGame() {
     populateBoard(4, 4);
     drawBoard();
     bindClick();
+    var interval = setTimeout(function() {
+        gameOver();
+    }, 60*1000);
+}
+
+function gameOver() {
+    Meteor.call('getResult', Session.get('gameId'), function(error, result) {
+        $('#board').html('game over');
+        $('#board').append('<br />seu time fez: '+result.score);
+        $('#board').append('<br />era pra fazer: '+result.target);
+        
+    });
 }
 
 function populateBoard(width, height) {

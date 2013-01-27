@@ -13,18 +13,20 @@ Meteor.methods({
             }],
             status: 'waiting players',
             score: 0,
-            target: 10,
+            target: 5,
             cureElement: 'sangue'
         });
         return gameId;
     },
     startGame: function(gameId, userId) {
-        n = games.find({
+        n = games.findOne({
             ownerId: userId
         },
         {
             gameId: gameId
-        }).fetch().length;
+        });
+        console.log(n.players.length)
+        
         
         games.update({
             ownerId: userId, 
@@ -32,7 +34,7 @@ Meteor.methods({
         }, {
             $set: {
                 status: 'ativo',
-                target: 10 * n
+                target: 5 * n.players.length
             }
         })
     },
@@ -63,16 +65,24 @@ Meteor.methods({
                 }
             })
             if(Math.random() > 0.8) {
+                e = randomize();
                 games.update(
                 {
                     gameId: parseInt(gameId)
                 },
                 {
                     $set: {
-                        cureElement: randomize()
+                        cureElement: e
                     }
                 })
+                console.log('Agora é ' + e);
             }
         }
+    },
+    getResult: function(gameId) {
+        var result = games.findOne({
+            gameId: gameId
+        });
+        return result;
     }
 })
